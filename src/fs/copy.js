@@ -1,6 +1,7 @@
 import { fileURLToPath} from 'url'
 import { dirname, join } from 'path';
 import { copyFile, mkdir, readdir } from 'fs/promises';
+import { ERROR_CODE } from './constants';
 
 const currentFilePath = fileURLToPath(import.meta.url)
 const __dirname = dirname(currentFilePath)
@@ -8,18 +9,13 @@ const __dirname = dirname(currentFilePath)
 const targetDirName = 'files_copy'
 const sourceDirName = 'files'
 
-const ALREADY_EXISTED_FILE_ERROR_CODE = 'EEXIST'
-const EXISTED_FILE_ERROR_MESSAGE = 'FS operation failed'
-
-const NO_SUCH_FILE_ERROR = 'ENOENT'
-
 const copy = async () => {
     try {
         await mkdir(join(__dirname, targetDirName))
 
     } catch (e) {
-        if (e.code === ALREADY_EXISTED_FILE_ERROR_CODE) {
-            throw new Error(EXISTED_FILE_ERROR_MESSAGE)
+        if (e.code === ERROR_CODE.ALREADY_EXISTED_FILE) {
+            throw new Error(DEFAULT_ERROR_MESSAGE)
         }
     }
 
@@ -33,8 +29,8 @@ const copy = async () => {
             await copyFile(sourcePath, targetPath)
         }
     } catch (e) {
-        if (e.code === NO_SUCH_FILE_ERROR) {
-            throw new Error(EXISTED_FILE_ERROR_MESSAGE)
+        if (e.code === ERROR_CODE.NO_SUCH_FILE) {
+            throw new Error(DEFAULT_ERROR_MESSAGE)
         }
     }
 };
