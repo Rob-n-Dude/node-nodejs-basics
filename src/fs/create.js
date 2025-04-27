@@ -1,7 +1,7 @@
 import { open } from 'fs/promises';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
-import { DEFAULT_ERROR_MESSAGE, ERROR_CODE } from './constants';
+import { DEFAULT_ERROR_MESSAGE, ERROR_CODE } from './constants.js';
 
 const currentFilePath = fileURLToPath(import.meta.url)
 const __dirname = dirname(currentFilePath)
